@@ -1,0 +1,14 @@
+ffmpeg -f x11grab -video_size 1920x1080 -framerate 30 -i :0.0 -f pulse -i default -preset ultrafast -crf 18 -pix_fmt yuv420p out.mkv
+
+
+ffmpeg -f x11grab -video_size 1920x1080 -framerate 30 -i :0.0 -f pulse -i alsa_output.pci-0000_00_1f.3.analog-stereo.monitor -preset ultrafast -crf 18 -pix_fmt yuv420p out.mkv
+// Ovenfor setter lyden til monitoren automatisk, ved å bytte ut 'default' med linja under: 
+
+-f pulse -i alsa_output.pci-0000_00_1f.3.analog-stereo.monitor
+
+// Hvis jeg endrer output source (i pulseaudio volume controle) til Headphones (unplugged), mens jeg recorder, 
+// kan jeg recorde fra browser (monitor) uten å måtte høre på lyden via høyttalerne. 
+// Akkurat nå finner jeg ikke hvordan jeg kan gjøre det via kommandolinje, siden min maskin kun har en sink. 
+// HVa skal jeg gjøre med dette?
+
+https://askubuntu.com/questions/14077/how-can-i-change-the-default-audio-device-from-command-line

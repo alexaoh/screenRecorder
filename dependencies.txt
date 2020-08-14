@@ -1,0 +1,8 @@
+Make a read text file for all dependencies. This is just a temporary file that describes the dependencies. 
+
+Runs of Linux (and most likely Mac) because of bash commands. 
+
+- selenium (for python)
+- webdriver for Firefox (Geckodriver)
+- ffmpeg 
+- python 
