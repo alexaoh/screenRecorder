@@ -1,0 +1,6 @@
+Use the Microsoft Mail API to get the correct url to zoom-lecture
+from my Outlook Email: https://docs.microsoft.com/en-us/outlook/rest/get-started
+
+Also need to fix zoom such that it is opened in the browser and not in the
+app, since I cannot control the zoom-app-GUI (at least not as easy as in the 
+browser with Selenium).
