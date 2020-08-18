@@ -1,39 +1,31 @@
 Use the Microsoft Mail API to get the correct url to zoom-lecture
 from my Outlook Email: https://docs.microsoft.com/en-us/outlook/rest/get-started
 
-
 Play with these commands: http://terokarvinen.com/2015/volume-control-with-pulseaudio-command-line-tools
 --> To make sure that the audio is unmuted and the headphone output device is selected. 
-
-How to force Zoom Meeting on web browser and block Open Zoom app dialog: 
-https://nerdschalk.com/how-to-force-zoom-meeting-on-web-browser/
---> This uses a Chrome-extension! Try to download the Chrome webdriver instead, and
-add the extension needed to force zoom to open in browser! (Try before Thursday!)
-https://www.edureka.co/community/48395/there-load-extension-chrome-browser-using-selenium-webdriver
---> It possibly works for Firefox also: 
-https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions
-https://datarebellion.com/blog/using-firefox-extensions-with-selenium-in-python/
-https://intoli.com/blog/firefox-extensions-with-selenium/
---> Add Chrome extension: https://stackoverflow.com/questions/16511384/using-extensions-with-selenium-python
-
 
 Could maybe use zoom-webhooks to start recording when the meeting is started, 
 and stop recording when the meeting has ended!? Link: 
 https://marketplace.zoom.us/docs/api-reference/webhook-reference/meeting-events/meeting-started
 (Should stop the recording when the "meeting has ended pop-up shows in the browser!)
 
-
-Zoom:
-name input xpath: //*[@id="inputname"]
-The checkbox xpath: /html/body/div[2]/div[3]/div[1]/div/div/span/div[1]
-button xpath: //*[@id="joinBtn"]
-
-Join by computer audio button: /html/body/div[2]/div[2]/div/div[2]/div/div[2]/div[3]/div/div[2]/div/button 
-
-zoom chat button xpath: /html/body/div[2]/div[2]/div/div[2]/div/div/div[2]/footer/div/div[2]/button[3]/div/div (turn on chat on the right side of the screen)
-
 MEN, KOMMER TIL EN CAPTCHA STRAKS DEN ÅPNES MED SELENIUM! MÅ DERMED FINNE EN LØSNING PÅ DETTE!?!?
 Need to get past zoom's captcha!
 
 Could avoid zoom altogether by opening as: firefox (url), but how to interact with the page then?
 (console with JavaScript?) It should be enough to just use requests and get/post requests!
+
+Test first if it is possible to trick the server to thinking the script is human: (avoid triggering the reCAPTCHA)
+https://stackoverflow.com/questions/58872451/how-to-bypass-google-captcha-with-selenium-and-python
+The link also contains a suggestion about saving cookies after solving the reCAPTCHA manually. 
+
+Try the 'Buster'-extension for solving the reCAPTCHA: 
+https://www.raymond.cc/blog/bypass-captcha-firefox-auto-solving-captcha-monster/
+https://addons.mozilla.org/nb-NO/firefox/addon/buster-captcha-solver/
+https://medium.com/analytics-vidhya/how-to-easily-bypass-recaptchav2-with-selenium-7f7a9a44fa9e
+
+Could use 2captcha. DeathByCaptcha . etc. Seems pretty easy to just find a fitting service (if the tips above don't work)
+
+Write a guide on how to find the Firefox extension PATH in README also (among other documentation).
+
+Noen som har laget en løser: https://gist.github.com/anton-petrov/71906417033f821199469bdff19f1e33

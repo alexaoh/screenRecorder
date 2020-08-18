@@ -2,3 +2,4 @@ geckodriver.log
 *.mkv
 __pycache__
 .vscode
+*.mp4

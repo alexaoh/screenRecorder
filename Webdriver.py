@@ -1,4 +1,7 @@
 from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+import random
+import time
 
 class Webdriver():
     """Class using selenium to open a webpage in Firefox with Geckodriver."""
@@ -7,6 +10,8 @@ class Webdriver():
         self.url = url
         self.driver = webdriver.Firefox()
         self.zoom_recording = zoom_recording
+        self.min_wait = 2
+        self.max_wait = 10
 
     def get_url(self):
         """Get url via Firefox driver and open the url in browser."""
@@ -28,41 +33,104 @@ class Webdriver():
         self.driver.quit()
 
     def zoom(self):
-        """Special function made to get Zoom-url, input necessary data and click buttons to end up in a meeting."""\
-        
-        driver = self.driver
+        """Special function made to get Zoom-url, input necessary data and click buttons to end up in a meeting."""
+
+        self.config()
+
+        # Some random waits are used in between, to try to trick Google. 
+        self.wait_between(self.min_wait, self.max_wait)
 
         # Installed extension (Zoom redirector) to stop Zoom from redirecting to the desktop app. 
-        zoom_extension_dir = "/home/ajo/.mozilla/firefox/4b3v1ml0.default-release/extensions/"
-        extension_name = "{2d0a18e8-6b0a-4c8c-9256-6e00c01f07fe}.xpi"
+        extensions_dir = "/home/ajo/.mozilla/firefox/4b3v1ml0.default-release/extensions/"
+        zoom_extension_name = "{2d0a18e8-6b0a-4c8c-9256-6e00c01f07fe}.xpi"
 
         # Install the extension to the webdriver window. 
-        driver.install_addon(zoom_extension_dir + extension_name)
+        self.driver.install_addon(extensions_dir + zoom_extension_name)
 
-        driver.get(self.url)
+        self.driver.get(self.url)
         
         # Input name in call.
-        name = driver.find_element_by_xpath('//*[@id="inputname"]')
+        name = self.driver.find_element_by_xpath('//*[@id="inputname"]')
         name.send_keys("Alex")
-
-        # Now we are stuck at the Captcha!? Solve this how!?
-        '''
-        # Click "I'm not a robot checkbox".
-        checkbox = driver.find_element_by_xpath('/html/body/div[2]/div[3]/div[1]/div/div/span/div[1]')
-        checkbox.click()
         
-        # Bypass Captcha.
+        self.wait_between(self.min_wait, self.max_wait)
+        
+        # Click "I'm not a robot checkbox".
+        self.driver.switch_to.frame(self.driver.find_element_by_xpath('/html/body/div[1]/div[3]/div[2]/form/div/div[3]/div/div/div/div/div/iframe'))
+        checkbox = self.driver.find_element_by_xpath('//*[@id="recaptcha-anchor"]')
+        self.driver.implicitly_wait(6) # Wait (a bit longer) to find element. 
+        checkbox.click()
 
-        # Submit.
-        button = driver.find_element_by_xpath('/*[@id="joinBtn"]')
+        self.wait_between(self.min_wait, self.max_wait)
+        
+        # Bypass reCAPTCHA with Buster extension for Firefox. 
+        buster_name = "{e58d3966-3d76-4cd9-8552-1582fbc800c1}.xpi"
+
+        self.driver.install_addon(extensions_dir + buster_name)
+
+        # Use the extension to solve the reCAPTCHA. 
+        self.driver.switch_to.default_content()
+        #print(len(self.driver.find_elements_by_tag_name("iframe")))
+        #self.driver.switch_to.frame(self.driver.find_elements_by_tag_name("iframe")[3]) 
+        self.driver.switch_to.frame(self.driver.find_elements_by_xpath('//*[@title="recaptcha challenge"]')[0])
+
+        self.wait_between(self.min_wait, self.max_wait)
+
+        self.driver.find_element_by_xpath('//*[@id="solver-button"]').click()
+
+        self.wait_between(self.min_wait, self.max_wait)
+
+        self.driver.find_element_by_xpath('//*[@id="recaptcha-verify-button"]').click()
+
+        self.driver.switch_to.default_content()
+
+        self.driver.implicitly_wait(6) # Wait to find element. 
+
+        # Join button. btn btn-primary btn-block btn-lg submit
+        button = self.driver.find_element_by_class_name('submit')
         button.click()
 
+        self.wait_between(self.min_wait, self.max_wait)
+
+        # Agree to terms of service
+        terms = self.driver.find_element_by_xpath('//*[@id="wc_agree1"]')
+        terms.click()
+
+        self.wait_between(self.min_wait, self.max_wait)
+
         # Next page: Join by computer audio.
-        audio = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div[2]/div/div[2]/div[3]/div/div[2]/div/button')
+        audio = self.driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div[2]/div/div[2]/div[3]/div/div[2]/div/button')
         audio.click()
 
+        self.wait_between(self.min_wait, self.max_wait)
+
         # Open chat.
-        chat = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div[2]/div/div/div[2]/footer/div/div[2]/button[3]/div/div')
+        chat = self.driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div[2]/div/div/div[2]/footer/div/div[2]/button[3]/div/div')
         chat.click()
-        '''
+    
         return self
+
+    def wait_between(self, MIN, MAX):
+        """Used to sleep between clicks, to make interaction more human-like."""
+        rand = random.uniform(MIN,MAX)
+        time.sleep(rand)
+
+    def config(self):
+        """Open Firefox about:config and set 'dom.webdriver.enabled' to False."""
+
+        self.driver.get("about:config")
+
+        self.wait_between(self.min_wait, self.max_wait)
+
+        warning_button = self.driver.find_element_by_xpath('//*[@id="warningButton"]')
+
+        warning_button.click()
+
+        input_field = self.driver.find_element_by_xpath('//*[@id="about-config-search"]')
+        input_field.send_keys("dom.webdriver.enabled")
+
+        self.driver.implicitly_wait(3) # Wait to find element. 
+
+        set_false = self.driver.find_element_by_xpath('/html/body/table/tr/th')
+        actionChains = ActionChains(self.driver)
+        actionChains.double_click(set_false).perform()

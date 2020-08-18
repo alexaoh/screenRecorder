@@ -5,7 +5,8 @@
 * Selenium (for Python)
 * Webdriver for Firefox (Geckodriver)
 * FFmpeg
-* Zoom Redirector Firefox extension to stop Zoom from opening in the desktop app. 
+* 'Zoom Redirector' extension to stop Zoom from opening in the desktop app. 
+* 'Buster: Captcha Solver for Humans' extension.
 
 I recommend making a virtual environment from 'dependencies.yml'. 
 
