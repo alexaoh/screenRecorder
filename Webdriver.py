@@ -38,7 +38,7 @@ class Webdriver():
         self.config()
 
         # Some random waits are used in between, to try to trick Google. 
-        self.wait_between(self.min_wait, self.max_wait)
+        self.wait_between()
 
         # Installed extension (Zoom redirector) to stop Zoom from redirecting to the desktop app. 
         extensions_dir = "/home/ajo/.mozilla/firefox/4b3v1ml0.default-release/extensions/"
@@ -53,7 +53,7 @@ class Webdriver():
         name = self.driver.find_element_by_xpath('//*[@id="inputname"]')
         name.send_keys("Alex")
         
-        self.wait_between(self.min_wait, self.max_wait)
+        self.wait_between()
         
         # Click "I'm not a robot checkbox".
         self.driver.switch_to.frame(self.driver.find_element_by_xpath('/html/body/div[1]/div[3]/div[2]/form/div/div[3]/div/div/div/div/div/iframe'))
@@ -61,7 +61,7 @@ class Webdriver():
         self.driver.implicitly_wait(6) # Wait (a bit longer) to find element. 
         checkbox.click()
 
-        self.wait_between(self.min_wait, self.max_wait)
+        self.wait_between()
         
         # Bypass reCAPTCHA with Buster extension for Firefox. 
         buster_name = "{e58d3966-3d76-4cd9-8552-1582fbc800c1}.xpi"
@@ -74,11 +74,11 @@ class Webdriver():
         #self.driver.switch_to.frame(self.driver.find_elements_by_tag_name("iframe")[3]) 
         self.driver.switch_to.frame(self.driver.find_elements_by_xpath('//*[@title="recaptcha challenge"]')[0])
 
-        self.wait_between(self.min_wait, self.max_wait)
+        self.wait_between()
 
         self.driver.find_element_by_xpath('//*[@id="solver-button"]').click()
 
-        self.wait_between(self.min_wait, self.max_wait)
+        self.wait_between()
 
         self.driver.find_element_by_xpath('//*[@id="recaptcha-verify-button"]').click()
 
@@ -90,19 +90,19 @@ class Webdriver():
         button = self.driver.find_element_by_class_name('submit')
         button.click()
 
-        self.wait_between(self.min_wait, self.max_wait)
+        self.wait_between()
 
         # Agree to terms of service
         terms = self.driver.find_element_by_xpath('//*[@id="wc_agree1"]')
         terms.click()
 
-        self.wait_between(self.min_wait, self.max_wait)
+        self.wait_between()
 
         # Next page: Join by computer audio.
         audio = self.driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div[2]/div/div[2]/div[3]/div/div[2]/div/button')
         audio.click()
 
-        self.wait_between(self.min_wait, self.max_wait)
+        self.wait_between()
 
         # Open chat.
         chat = self.driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div[2]/div/div/div[2]/footer/div/div[2]/button[3]/div/div')
@@ -110,9 +110,9 @@ class Webdriver():
     
         return self
 
-    def wait_between(self, MIN, MAX):
+    def wait_between(self):
         """Used to sleep between clicks, to make interaction more human-like."""
-        rand = random.uniform(MIN,MAX)
+        rand = random.uniform(self.min_wait, self.max_wait)
         time.sleep(rand)
 
     def config(self):
@@ -120,7 +120,7 @@ class Webdriver():
 
         self.driver.get("about:config")
 
-        self.wait_between(self.min_wait, self.max_wait)
+        self.wait_between()
 
         warning_button = self.driver.find_element_by_xpath('//*[@id="warningButton"]')
 
