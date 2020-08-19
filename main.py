@@ -6,7 +6,7 @@ from utils import find_vacant_filename
 from FFmpeg_util import FFmpeg_util
 
 if len(sys.argv) !=  2:
-    raise Exception("The script takes one command line arguments: The url to record from.")
+    raise Exception("The script takes one command line argument: The url to record from.")
 
 
 url = sys.argv[1] # Get url from terminal argument.

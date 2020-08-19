@@ -14,10 +14,11 @@ class FFmpeg_util:
 
     def record_screen_with_audio(self, minutes):
         """Record monitor video and audio. Save as .mk4 (uncompressed) in . directory."""
-        #cmd = "/usr/bin/ffmpeg -f x11grab -video_size 1920x1080 -framerate 30 -i :0.0 -f pulse -i alsa_output.pci-0000_00_1f.3.analog-stereo.monitor -preset ultrafast -crf 18 -pix_fmt yuv420p "+self.filename+".mkv"
+        # The command directly below works fine from the command line, but cannot find alsa_output... from crontab for some reason!
+        cmd = "/usr/bin/ffmpeg -f x11grab -video_size 1920x1080 -framerate 30 -i :0.0 -f pulse -i alsa_output.pci-0000_00_1f.3.analog-stereo.monitor -preset ultrafast -crf 18 -pix_fmt yuv420p "+self.filename+".mkv"
         #cmd = "ffmpeg -f x11grab -video_size 1920x1080 -framerate 30 -i :0.0 -f pulse -i "+ "/etc/pulse/default.pa" +" -preset ultrafast -crf 18 -pix_fmt yuv420p "+self.filename+".mkv"
         # Kommandoen nedenfor ga ingen lyd! Den gir connection refused via crontab uansett!
-        cmd = "/usr/bin/ffmpeg -f x11grab -video_size 1920x1080 -framerate 30 -i :0.0 -f alsa -ac 2 -i pulse -acodec aac -strict experimental -preset ultrafast -crf 18 -pix_fmt yuv420p "+self.filename+".mkv"
+        #cmd = "/usr/bin/ffmpeg -f x11grab -video_size 1920x1080 -framerate 30 -i :0.0 -f alsa -ac 2 -i pulse -acodec aac -strict experimental -preset ultrafast -crf 18 -pix_fmt yuv420p "+self.filename+".mkv"
         process = subprocess.Popen(cmd.split(" "))
 
         # Still need to figure out how to change to headphones as output to avoid having output through the speakers when recording. 
