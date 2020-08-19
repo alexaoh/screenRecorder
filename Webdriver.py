@@ -35,7 +35,7 @@ class Webdriver():
     def zoom(self):
         """Special function made to get Zoom-url, input necessary data and click buttons to end up in a meeting."""
 
-        self.config()
+        self.about_config()
 
         # Some random waits are used in between, to try to trick Google. 
         self.wait_between()
@@ -52,6 +52,11 @@ class Webdriver():
         # Input name in call.
         name = self.driver.find_element_by_xpath('//*[@id="inputname"]')
         name.send_keys("Alex")
+
+        # Bypass reCAPTCHA with Buster extension for Firefox. 
+        buster_name = "{e58d3966-3d76-4cd9-8552-1582fbc800c1}.xpi"
+
+        self.driver.install_addon(extensions_dir + buster_name)
         
         self.wait_between()
         
@@ -60,13 +65,6 @@ class Webdriver():
         checkbox = self.driver.find_element_by_xpath('//*[@id="recaptcha-anchor"]')
         self.driver.implicitly_wait(6) # Wait (a bit longer) to find element. 
         checkbox.click()
-
-        self.wait_between()
-        
-        # Bypass reCAPTCHA with Buster extension for Firefox. 
-        buster_name = "{e58d3966-3d76-4cd9-8552-1582fbc800c1}.xpi"
-
-        self.driver.install_addon(extensions_dir + buster_name)
 
         # Use the extension to solve the reCAPTCHA. 
         self.driver.switch_to.default_content()
@@ -80,7 +78,14 @@ class Webdriver():
 
         self.wait_between()
 
+        # Press sound button first.
+        #self.driver.find_element_by_xpath('//*[@id=":2"]').click()
+
+        self.wait_between()
+
         self.driver.find_element_by_xpath('//*[@id="recaptcha-verify-button"]').click()
+
+        self.wait_between()
 
         self.driver.switch_to.default_content()
 
@@ -98,9 +103,15 @@ class Webdriver():
 
         self.wait_between()
 
+        # Need to wait for the following buttons to pop up now! (in case the meeting has not started yet)!
+
+        # Need to paste meeting password and click the join button. (Probably take passcode as a variable from the command line also!)
+
         # Next page: Join by computer audio.
         audio = self.driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div[2]/div/div[2]/div[3]/div/div[2]/div/button')
         audio.click()
+
+        # Then need to confirm browser pop-up for sound! (in the left corner)
 
         self.wait_between()
 
@@ -115,7 +126,7 @@ class Webdriver():
         rand = random.uniform(self.min_wait, self.max_wait)
         time.sleep(rand)
 
-    def config(self):
+    def about_config(self):
         """Open Firefox about:config and set 'dom.webdriver.enabled' to False."""
 
         self.driver.get("about:config")

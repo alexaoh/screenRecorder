@@ -3,3 +3,5 @@ geckodriver.log
 __pycache__
 .vscode
 *.mp4
+*.log
+URL.sh

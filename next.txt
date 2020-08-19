@@ -29,3 +29,10 @@ Could use 2captcha. DeathByCaptcha . etc. Seems pretty easy to just find a fitti
 Write a guide on how to find the Firefox extension PATH in README also (among other documentation).
 
 Noen som har laget en løser: https://gist.github.com/anton-petrov/71906417033f821199469bdff19f1e33
+
+--> Set up script to change url in crontab -e (cronjobs) each week ! 
+This url should be GET via the Mail API of Outlook!
+--> Make a bash-script that is chown and run with cron (to avoid no privileges), that runs the script!
+
+DERSOM INGENTING AV DETTE FUNGERER: KAN EV BARE ÅPNE NETTLESEREN FØR FORELESNING (INNE I ZOOM-MØTET) 
+OG BARE KJØRE FFMPEG-RECORDING VIA CRONTAB FRA FORELESNINGEN BEGYNNER (DERSOM ZOOM FORTSATT ER VRANG!)
