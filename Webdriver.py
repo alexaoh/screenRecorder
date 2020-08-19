@@ -55,7 +55,7 @@ class Webdriver():
 
         # Bypass reCAPTCHA with Buster extension for Firefox. 
         buster_name = "{e58d3966-3d76-4cd9-8552-1582fbc800c1}.xpi"
-
+        # Need to figure out something to do if Buster does not solve it the first time!! press the retry button until it is solved!
         self.driver.install_addon(extensions_dir + buster_name)
         
         self.wait_between()

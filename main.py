@@ -19,7 +19,7 @@ filename = find_vacant_filename()
 
 recorder = FFmpeg_util(filename)
 
-recorded = recorder.record_screen_with_audio(minutes = 0.5) # 
+recorded = recorder.record_screen_with_audio(minutes = 0.5) 
 
 open_webpage.close_driver()
 
