@@ -25,7 +25,7 @@ In this case it uses the installed extension Zoom Redirector to open the meeting
 ### Set up job via cron
 
 * Add a file name 'URL.sh' which conatins the following 
-> URL="<The url you want to open>"
+> URL="\<The url you want to open\>"
 
 * Make script executable. Run the following command in the terminal. 
 > chmod +x job.sh
@@ -36,6 +36,6 @@ In this case it uses the installed extension Zoom Redirector to open the meeting
 The job should have the specified format. 
 E.g: 
 
-> 44 15 * * 3 export DISPLAY=:0 && /<absolute path to file>/job.sh > /<absolute path to file>/cron.log 2>&1
+> 44 15 * * 3 export DISPLAY=:0 && /\<absolute path to file\>/job.sh > /\<absolute path to file\>/cron.log 2>&1
 
 The command given above runs 'job.sh' on the display at 15:44 every Wednesday. 
