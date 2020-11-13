@@ -22,7 +22,11 @@ Run the script like the following:
 The script assumes that the url is a Zoom-meeting if it contains the string 'zoom' in the url. 
 In this case it uses the installed extension Zoom Redirector to open the meeting in the browser and do the following steps to take you to the meeting. 
 
-You can also run the script manually via 'job.sh', by following the two bulletpoints below. 
+You can also run the script manually via 'job.sh', by following the top two bulletpoints below. After making it executable you can run the file by typing 
+
+> ./job.sh \<argument regarding length of recording\>
+
+into the terminal. 
 
 ### Set up job via cron
 
@@ -38,8 +42,8 @@ You can also run the script manually via 'job.sh', by following the two bulletpo
 The job should have the specified format. 
 E.g: 
 
-> 44 15 * * 3 export DISPLAY=:0 && /\<absolute path to file\>/job.sh > /\<absolute path to file\>/cron.log 2>&1
+> 44 15 * * 3 export DISPLAY=:0 && /\<absolute path to file\>/job.sh 90 > /\<absolute path to file\>/cron.log 2>&1
 
-The command given above runs 'job.sh' on the display at 15:44 every Wednesday. 
+The command given above runs 'job.sh', for 90 minutes, on the display at 15:44 every Wednesday. 
 
 This is by no means a finished project and could be vastly improved. However, I can use it as originally planned. We shall see if I find the time to improve it. Feel free to contribute with a PR if you find this interesting :)
