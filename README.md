@@ -17,7 +17,9 @@ This was made originally to record Zoom-lectures automatically, since my lecture
 
 Run the script like the following:
 
-> python main.py [url to record from]
+```bash
+python main.py [url to record from]
+```
 
 The script assumes that the url is a Zoom-meeting if it contains the string 'zoom' in the url. 
 In this case it uses the installed extension Zoom Redirector to open the meeting in the browser and do the following steps to take you to the meeting. 
@@ -27,18 +29,29 @@ You can also run the script manually via 'job.sh', by following the two bulletpo
 ### Set up job via cron
 
 * Add a file name 'URL.sh' which conatins the following 
-> URL="\<The url you want to open\>"
+
+```bash
+URL="\<The url you want to open\>"
+```
 
 * Make script executable. Run the following command in the terminal. 
-> chmod +x job.sh
+
+```bash
+chmod +x job.sh
+```
 
 * Add a new job to crontab. This is done by editing the file that opens with the command 
-> crontab -e  
+
+```bash
+crontab -e  
+```
 
 The job should have the specified format. 
 E.g: 
 
-> 44 15 * * 3 export DISPLAY=:0 && /\<absolute path to file\>/job.sh > /\<absolute path to file\>/cron.log 2>&1
+```bash
+44 15 * * 3 export DISPLAY=:0 && /\<absolute path to file\>/job.sh > /\<absolute path to file\>/cron.log 2>&1
+```
 
 The command given above runs 'job.sh' on the display at 15:44 every Wednesday. 
 

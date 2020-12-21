@@ -5,6 +5,8 @@ I am therefore opening the meeting in a browser myself. The recording is started
 Remember to make the script 'record.sh' executable. 
 The cron command I used is
 
-> 14 08 * * 4 /\<absolute path to screenRecorder directory\>/screeenRecorder/onlyRecordScreen/record.sh 90 > /\<absolute path to screenRecorder directory\>/screeenRecorder/onlyRecordScreen/cron.log 2>&1
+```bash
+14 08 * * 4 /\<absolute path to screenRecorder directory\>/screeenRecorder/onlyRecordScreen/record.sh 90 > /\<absolute path to screenRecorder directory\>/screeenRecorder/onlyRecordScreen/cron.log 2>&1
+```
 
 This runs the recording of the screen at 08:14, for 90 minutes, every Thursday. The part after \> logs the output from the job to the file 'cron.log' in the same directory. 
